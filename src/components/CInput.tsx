@@ -22,7 +22,9 @@ const CInput = (props: CInputProps & IInputProps) => {
   return (
     <FormControl isRequired={isRequired} isInvalid={isInvalid}>
       <Stack mx="0">
-        <FormControl.Label>{label}</FormControl.Label>
+        <FormControl.Label _text={{ color: 'gray.500', fontWeight: 'bold' }}>
+          {label}
+        </FormControl.Label>
         <Input
           type={type}
           size={'lg'}

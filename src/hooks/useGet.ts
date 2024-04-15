@@ -2,15 +2,17 @@ import axios from 'axios';
 import * as React from 'react';
 import useEdit from './useEdit';
 import { useUpdate } from '../provider/ChangeProvider';
+import useUrl from './useUrl';
 
-const useGet = (url: any) => {
+const useGet = (route?: any) => {
   const [data, setData] = React.useState(null);
   const update = useUpdate();
+  const ip = useUrl();
 
   React.useEffect(() => {
     axios({
       method: 'get',
-      url: url,
+      url: `${ip}${route}`,
       responseType: 'json'
     })
       .then((response) => {
@@ -20,7 +22,7 @@ const useGet = (url: any) => {
         console.error(error);
         console.log(error.response.data);
       });
-  }, [url, update.reloader]);
+  }, [route, update.reloader]);
   return [data];
 };
 

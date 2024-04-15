@@ -2,18 +2,20 @@ import axios from 'axios';
 import * as React from 'react';
 import { useUpdate } from '../provider/ChangeProvider';
 import { useNavigation } from '@react-navigation/native';
+import useUrl from './useUrl';
 
-const usePost = (url: any) => {
+const usePost = (route: any) => {
   const [data, setData] = React.useState<any>(null);
   const [pushData, setPushData] = React.useState<any>();
   const update = useUpdate();
   const navigation = useNavigation<any>();
+  const ip = useUrl();
 
   React.useEffect(() => {
     if (pushData !== undefined) {
       axios({
         method: 'post',
-        url: url,
+        url: `${ip}${route}`,
         responseType: 'json',
         data: pushData
       })
@@ -27,7 +29,7 @@ const usePost = (url: any) => {
           console.log(error.response.data);
         });
     }
-  }, [url, pushData]);
+  }, [route, pushData]);
   return [data, setPushData];
 };
 

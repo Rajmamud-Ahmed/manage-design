@@ -20,13 +20,13 @@ const CTextArea = (props: IInputProps & ITextAreaProps & CTextAreaProps) => {
   const { label, ...rest } = props;
   return (
     <Box>
-      <Text mb="1" bold>
+      <Text mb="1" bold color={'gray.500'}>
         {label}
       </Text>
       <TextArea
         aria-label="t1"
         numberOfLines={4}
-        h={210}
+        h={20}
         size={'lg'}
         placeholder={label}
         // isInvalid

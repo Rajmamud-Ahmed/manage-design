@@ -1,26 +1,34 @@
 import { Box, Divider, Heading, HStack, Text, VStack } from 'native-base';
 import * as React from 'react';
-import { TouchableOpacity } from 'react-native';
+import {
+  StyleProp,
+  TextStyle,
+  TouchableOpacity,
+  ViewStyle
+} from 'react-native';
 
-const HomeCard = (props: { data: any; onPress: (event: any) => void }) => {
-  const { data, onPress } = props;
-  const content = data.kwHp;
-  const TEXT =
-    content.length < 46 ? `${content}` : `${content.slice(0, 46)}...`;
-  const status = data.taskStatus;
+const HomeCard = (props: {
+  data: any;
+  onPress?: (event: any) => void;
+  style?: StyleProp<TextStyle>;
+}) => {
+  const { data, onPress, style } = props;
+
   return (
-    <Box>
-      <Divider
-        _light={{
-          bg: 'muted.800'
-        }}
-        _dark={{
-          bg: 'muted.50'
-        }}
-      />
+    <Box style={style}>
+      {!style && (
+        <Divider
+          _light={{
+            bg: 'muted.800'
+          }}
+          _dark={{
+            bg: 'muted.50'
+          }}
+        />
+      )}
       <TouchableOpacity onPress={onPress}>
         <HStack rounded={0}>
-          <VStack justifyContent={'center'} flex={1}>
+          <VStack justifyContent={'center'} flex={1} pl={style ? 2 : 0}>
             <Heading fontSize={20}>Name:-{data.name}</Heading>
           </VStack>
           <Divider
@@ -33,7 +41,7 @@ const HomeCard = (props: { data: any; onPress: (event: any) => void }) => {
               bg: 'muted.50'
             }}
           />
-          <VStack flex={1} alignItems={'flex-end'} py={2}>
+          <VStack flex={1} alignItems={'flex-end'} py={2} pr={style ? 2 : 0}>
             <Text fontSize={16} fontWeight={'bold'}>
               Model:-{data.model}
             </Text>

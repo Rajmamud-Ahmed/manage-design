@@ -23,12 +23,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import useGet from '../../hooks/useGet';
 import { AntDesign } from '@expo/vector-icons';
+import useUrl from 'src/hooks/useUrl';
+import * as Network from 'expo-network';
+
 const Home = ({ navigation }) => {
-  // const navigation = useNavigation<any>();
-  const [data] = useGet('http://192.168.211.160:3000/product');
-  console.log('====================================');
-  console.log(data);
-  console.log('====================================');
+  const [data] = useGet(`product`);
+
   return (
     <ParentContainer>
       <Heading>Designs</Heading>

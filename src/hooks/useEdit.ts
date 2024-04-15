@@ -1,16 +1,18 @@
 import axios from 'axios';
 import * as React from 'react';
 import { useUpdate } from '../provider/ChangeProvider';
+import useUrl from './useUrl';
 
-const useEdit = (url: any) => {
+const useEdit = (route: any) => {
   const [data, setData] = React.useState<any>(null);
   const [pushData, setPushData] = React.useState<any>();
   const update = useUpdate();
+  const ip = useUrl();
 
   React.useEffect(() => {
     axios({
       method: 'put',
-      url: url,
+      url: `${ip}${route}`,
       responseType: 'json',
       data: pushData
     })
@@ -22,7 +24,7 @@ const useEdit = (url: any) => {
         console.error(error);
         console.log(error.response.data);
       });
-  }, [url, pushData]);
+  }, [route, pushData]);
   return [data, setPushData];
 };
 

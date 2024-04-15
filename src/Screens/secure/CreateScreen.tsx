@@ -1,31 +1,51 @@
 import * as React from 'react';
 import ParentContainer from '../../components/ParentContainer';
-import { Box, Checkbox, Heading, HStack, ScrollView, Text } from 'native-base';
+import { Box, Heading, HStack, ScrollView, Text } from 'native-base';
 import BackButton from '../../components/BackButton';
 import CInput from '../../components/CInput';
 import CTextArea from '../../components/CTextArea';
 import CButton from '../../components/CButton';
 import { Formik, Field, FieldProps, FormikHelpers } from 'formik';
-import NewCheckBox from '../../components/NewCheckBox';
 import * as Yup from 'yup';
 import usePost from '../../hooks/usePost';
 
 const CreateScreen = () => {
-  const [data, setPushData] = usePost(`http://192.168.211.160:3000/task`);
+  const [data, setPushData] = usePost(`product`);
 
   const handleSubmit = (values: any, form: FormikHelpers<any>) => {
     form.setSubmitting(true);
     setPushData({
-      taskName: values.taskName,
-      content: values.content,
-      taskStatus: false
+      name: values.name,
+      model: values.model,
+      kwHp: values.kwHp,
+      cap: values.cap,
+      terms1: values.terms1,
+      discription1: values.discription1,
+      terms2: values.terms2,
+      discription2: values.discription2
     });
   };
 
   const previousValue = {
-    taskName: '',
-    content: ''
+    name: '',
+    model: '',
+    kwHp: '',
+    cap: '',
+    terms1: '',
+    discription1: '',
+    terms2: '',
+    discription2: ''
   };
+  const validationSchema = Yup.object({
+    name: Yup.string().required(),
+    model: Yup.string().required(),
+    kwHp: Yup.string().required(),
+    cap: Yup.string().required(),
+    terms1: Yup.string().required(),
+    discription1: Yup.string().required(),
+    terms2: Yup.string().required(),
+    discription2: Yup.string().required()
+  });
 
   return (
     <ParentContainer>
@@ -37,10 +57,7 @@ const CreateScreen = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <Formik
           initialValues={previousValue}
-          validationSchema={Yup.object({
-            taskName: Yup.string().required(),
-            content: Yup.string().required()
-          })}
+          validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
           {({
@@ -55,55 +72,77 @@ const CreateScreen = () => {
               <Box w="100%">
                 <CInput
                   label="Name"
-                  isInvalid={!!errors.taskName && !!touched.taskName}
-                  errorMessage={errors.taskName}
-                  onChangeText={handleChange('taskName')}
-                  onBlur={handleBlur('taskName')}
-                  value={values.taskName}
+                  isInvalid={!!errors.name && !!touched.name}
+                  errorMessage={errors.name}
+                  onChangeText={handleChange('name')}
+                  onBlur={handleBlur('name')}
+                  value={values.name}
                 />
                 <Box h={4} />
                 <CInput
                   label="Model"
-                  isInvalid={!!errors.taskName && !!touched.taskName}
-                  errorMessage={errors.taskName}
-                  onChangeText={handleChange('taskName')}
-                  onBlur={handleBlur('taskName')}
-                  value={values.taskName}
+                  isInvalid={!!errors.model && !!touched.model}
+                  errorMessage={errors.model}
+                  onChangeText={handleChange('model')}
+                  onBlur={handleBlur('model')}
+                  value={values.model}
                 />
                 <Box h={4} />
-                <CInput
-                  label="Kw/Hp"
-                  isInvalid={!!errors.taskName && !!touched.taskName}
-                  errorMessage={errors.taskName}
-                  onChangeText={handleChange('taskName')}
-                  onBlur={handleBlur('taskName')}
-                  value={values.taskName}
-                />
-                <Box h={4} />
-                <CInput
-                  label="Run Cap"
-                  isInvalid={!!errors.taskName && !!touched.taskName}
-                  errorMessage={errors.taskName}
-                  onChangeText={handleChange('taskName')}
-                  onBlur={handleBlur('taskName')}
-                  value={values.taskName}
-                />
+                <HStack flex={1} space={3}>
+                  <Box flex={1}>
+                    <CInput
+                      label="Kw/Hp"
+                      isInvalid={!!errors.kwHp && !!touched.kwHp}
+                      errorMessage={errors.kwHp}
+                      onChangeText={handleChange('kwHp')}
+                      onBlur={handleBlur('kwHp')}
+                      value={values.kwHp}
+                    />
+                  </Box>
+                  <Box flex={1}>
+                    <CInput
+                      label="Run Cap"
+                      isInvalid={!!errors.cap && !!touched.cap}
+                      errorMessage={errors.cap}
+                      onChangeText={handleChange('cap')}
+                      onBlur={handleBlur('cap')}
+                      value={values.cap}
+                    />
+                  </Box>
+                </HStack>
+
                 <Box h={4} />
                 <CTextArea
+                  label={'Running coil'}
+                  isInvalid={!!errors.terms1 && !!touched.terms1}
+                  errorMessage={errors.terms1}
+                  onChangeText={handleChange('terms1')}
+                  onBlur={handleBlur('terms1')}
+                  value={values.terms1}
+                />
+                <CTextArea
                   label={'Discription on Running coil'}
-                  isInvalid={!!errors.content && !!touched.content}
-                  errorMessage={errors.content}
-                  onChangeText={handleChange('content')}
-                  onBlur={handleBlur('content')}
-                  value={values.content}
+                  isInvalid={!!errors.discription1 && !!touched.discription1}
+                  errorMessage={errors.discription1}
+                  onChangeText={handleChange('discription1')}
+                  onBlur={handleBlur('discription1')}
+                  value={values.discription1}
+                />
+                <CTextArea
+                  label={'Starting coil'}
+                  isInvalid={!!errors.terms2 && !!touched.terms2}
+                  errorMessage={errors.terms2}
+                  onChangeText={handleChange('terms2')}
+                  onBlur={handleBlur('terms2')}
+                  value={values.terms2}
                 />
                 <CTextArea
                   label={'Discription on Starting coil'}
-                  isInvalid={!!errors.content && !!touched.content}
-                  errorMessage={errors.content}
-                  onChangeText={handleChange('content')}
-                  onBlur={handleBlur('content')}
-                  value={values.content}
+                  isInvalid={!!errors.discription2 && !!touched.discription2}
+                  errorMessage={errors.discription2}
+                  onChangeText={handleChange('discription2')}
+                  onBlur={handleBlur('discription2')}
+                  value={values.discription2}
                 />
 
                 <CButton mt={'auto'} w={'full'} onPress={() => handleSubmit()}>
